@@ -6,7 +6,8 @@
       "name": "Margherita",
       "image": "/",
       "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Qui, reprehenderit voluptas quidem iste cum expedita.",
-      "category": 2
+      "category": 2,
+      "user": 1
     }
   },
   { 

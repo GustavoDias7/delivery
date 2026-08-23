@@ -11,13 +11,14 @@ services:
       - .env
     depends_on:
       - db
+      - redis
     networks:
       - projectnetwork
     command: >
       sh -c "sleep 5 &&
             python manage.py migrate &&
-            python manage.py loaddata address.json order.json product.json &&
             python manage.py handlesuperuser &&
+            python manage.py loaddata address.json order.json product-categories.json products.json &&
             npm run build &&
             python manage.py runserver 0.0.0.0:8000"
   db:
@@ -26,6 +27,11 @@ services:
       - .env
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - projectnetwork
+
+  redis:
+    image: redis:8
     networks:
       - projectnetwork
 
