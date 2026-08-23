@@ -18,7 +18,7 @@ services:
             python manage.py migrate &&
             python manage.py loaddata address.json order.json product.json &&
             python manage.py handlesuperuser &&
-            yarn build &&
+            npm run build &&
             python manage.py runserver 0.0.0.0:8000"
   db:
     image: postgres:14

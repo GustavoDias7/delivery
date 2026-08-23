@@ -1,0 +1,26 @@
+[
+  { 
+    "model": "product.product", 
+    "pk": 1, 
+    "fields": { 
+      "name": "Margherita",
+      "image": "/",
+      "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Qui, reprehenderit voluptas quidem iste cum expedita.",
+      "category": 2
+    }
+  },
+  { 
+    "model": "product.productvariant", 
+    "pk": 1, 
+    "fields": { 
+      "product": 1,
+      "size": "2",
+      "diameter": 30,
+      "stuffed_edge": true,
+      "price": 9999,
+      "discount": "0.1",
+      "default": true
+    }
+  }
+]
+
