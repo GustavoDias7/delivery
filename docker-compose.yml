@@ -1,12 +1,9 @@
-version: "3.9"
-
 services:
   app:
     build: .
-    ports:
-      - "8000:8000"
     volumes:
       - .:/app
+      - static_volume:/app/static
     env_file:
       - .env
     depends_on:
@@ -15,12 +12,9 @@ services:
     networks:
       - projectnetwork
     command: >
-      sh -c "sleep 5 &&
-            python manage.py migrate &&
-            python manage.py handlesuperuser &&
-            python manage.py loaddata address.json order.json product-categories.json products.json &&
-            npm run build &&
-            python manage.py runserver 0.0.0.0:8000"
+      sh -c "chmod +x ./scripts/initial-setup.sh &&
+      ./scripts/initial-setup.sh"
+  
   db:
     image: postgres:14
     env_file:
@@ -34,9 +28,27 @@ services:
     image: redis:8
     networks:
       - projectnetwork
+  
+  web:
+    image: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    env_file:
+      - .env
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./scripts/generate-dev-certs.sh:/scripts/generate-dev-certs.sh
+      - static_volume:/var/www/static
+    depends_on:
+      - app
+    networks:
+      - projectnetwork
+    command: sh -c "sleep 15 && chmod +x /scripts/generate-dev-certs.sh && /scripts/generate-dev-certs.sh && nginx -g 'daemon off;'"
 
 volumes:
   postgres_data:
+  static_volume:
 
 networks:
   projectnetwork:

@@ -34,7 +34,10 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG')
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [env('BACKEND_HOST')]
+
+CSRF_TRUSTED_ORIGINS = [env('BACKEND_ORIGIN')]
+CORS_ORIGIN_WHITELIST = [env('BACKEND_ORIGIN')]
 
 AUTH_USER_MODEL = "user.User"
 
